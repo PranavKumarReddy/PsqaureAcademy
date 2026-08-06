@@ -1,0 +1,54 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "PsquareDevADF"
+		},
+		"ADLSDev_LS_accountKey": {
+			"value": ""
+		},
+		"ADLSUAT_LS_accountKey": {
+			"value": ""
+		},
+		"AzureSqlDatabase_LS_password": {
+			"value": ""
+		},
+		"ADLSDev_LS_properties_typeProperties_url": {
+			"value": "https://psquareadls.dfs.core.windows.net/"
+		},
+		"ADLSUAT_LS_properties_typeProperties_url": {
+			"value": "https://psquareadlsuat.dfs.core.windows.net/"
+		},
+		"AzureSqlDatabase_LS_properties_typeProperties_server": {
+			"value": "psquareserver.database.windows.net"
+		},
+		"AzureSqlDatabase_LS_properties_typeProperties_database": {
+			"value": "free-sql-db-9710002"
+		},
+		"AzureSqlDatabase_LS_properties_typeProperties_userName": {
+			"value": "psquareadmin"
+		},
+		"RestService2_LS_properties_typeProperties_url": {
+			"value": " https://www.gov.uk/"
+		},
+		"Rest_LS_properties_typeProperties_url": {
+			"value": "https://www.gov.uk/bank-holidays.json"
+		},
+		"EventBased_tr_properties_typeProperties_scope": {
+			"value": "/subscriptions/f40da08b-7677-4efd-8bb4-f782cfb41acc/resourceGroups/Psquarebatch-1/providers/Microsoft.Storage/storageAccounts/psquareadls"
+		},
+		"TumblingWindow_tr_properties_pipeline_parameters_TableName": {
+			"value": "DimOrders"
+		},
+		"scheduled_tr_properties_PL_Session17_parameters_TableName": {
+			"value": "DimCustomer"
+		},
+		"containerUri": {
+			"value": ""
+		},
+		"containerSasToken": {
+			"value": ""
+		}
+	}
+}
