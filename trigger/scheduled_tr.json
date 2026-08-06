@@ -1,0 +1,35 @@
+{
+	"name": "scheduled_tr",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Stopped",
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "PL_Session17",
+					"type": "PipelineReference"
+				},
+				"parameters": {
+					"TableName": "DimCustomer"
+				}
+			}
+		],
+		"type": "ScheduleTrigger",
+		"typeProperties": {
+			"recurrence": {
+				"frequency": "Hour",
+				"interval": 1,
+				"startTime": "2026-07-27T00:00:00",
+				"timeZone": "India Standard Time",
+				"schedule": {
+					"hours": [
+						6
+					],
+					"monthDays": [
+						-1
+					]
+				}
+			}
+		}
+	}
+}

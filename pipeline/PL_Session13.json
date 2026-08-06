@@ -1,0 +1,115 @@
+{
+	"name": "PL_Session13",
+	"properties": {
+		"description": "StoredProcedure, Script, SetVariable",
+		"activities": [
+			{
+				"name": "Stored procedure",
+				"type": "SqlServerStoredProcedure",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[dbo].[usp_Load_MonthlyAggregateFact]",
+					"enforceOneTimeExecution": false,
+					"storedProcedureParameters": {
+						"YearMonth": {
+							"value": "202606",
+							"type": "Int32"
+						}
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase_LS",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "Script",
+				"type": "Script",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase_LS",
+					"type": "LinkedServiceReference"
+				},
+				"typeProperties": {
+					"scripts": [
+						{
+							"type": "Query",
+							"text": "\nselect top 10* from dbo.DimCustomer; --DML operation;\n\nselect top 10 * from dbo.DimDate;\n\ninsert into dbo.test values (1,10), (2,10);"
+						}
+					],
+					"scriptBlockExecutionTimeout": "02:00:00"
+				}
+			},
+			{
+				"name": "InputDateTime",
+				"type": "SetVariable",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
+				"dependsOn": [],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "InputDateTime",
+					"value": {
+						"value": "@utcNow()",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "Web1",
+				"type": "WebActivity",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"method": "POST",
+					"url": "https://tradestie.com/api/v1/apps/reddit",
+					"body": "message /data"
+				}
+			}
+		],
+		"variables": {
+			"InputDateTime": {
+				"type": "String",
+				"defaultValue": "Null"
+			},
+			"EnvironmentVariable": {
+				"type": "String",
+				"defaultValue": "Null"
+			}
+		},
+		"annotations": [],
+		"lastPublishTime": "2026-07-21T02:43:40Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

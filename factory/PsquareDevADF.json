@@ -1,0 +1,15 @@
+{
+	"name": "PsquareDevADF",
+	"properties": {
+		"trustModeClaimForMi": {
+			"value": "Disabled",
+			"editable": true
+		}
+	},
+	"location": "eastus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "bd2a0f59-c638-4958-a54a-b9ddcfc325ff",
+		"tenantId": "ac3d7d69-1e8a-4e8a-9fe4-5f7b55fe394d"
+	}
+}

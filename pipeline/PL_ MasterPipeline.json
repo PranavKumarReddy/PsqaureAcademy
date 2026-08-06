@@ -1,0 +1,81 @@
+{
+	"name": "PL_ MasterPipeline",
+	"properties": {
+		"activities": [
+			{
+				"name": "Childpipeline",
+				"type": "ExecutePipeline",
+				"dependsOn": [],
+				"policy": {
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "pl_test",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "childpipeline2",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "intermediaryWait",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "PL_DataMovement",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "WaitTime",
+				"type": "Wait",
+				"dependsOn": [
+					{
+						"activity": "childpipeline2",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"waitTimeInSeconds": 10
+				}
+			},
+			{
+				"name": "intermediaryWait",
+				"type": "Wait",
+				"dependsOn": [
+					{
+						"activity": "Childpipeline",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"waitTimeInSeconds": 5
+				}
+			}
+		],
+		"annotations": [],
+		"lastPublishTime": "2026-07-21T01:32:01Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

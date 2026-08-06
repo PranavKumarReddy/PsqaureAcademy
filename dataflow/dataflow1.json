@@ -1,0 +1,82 @@
+{
+	"name": "dataflow1",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "DelimitedText",
+						"type": "DatasetReference"
+					},
+					"name": "source1"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "Parquet_ds",
+						"type": "DatasetReference"
+					},
+					"name": "DerivedParquetData"
+				},
+				{
+					"dataset": {
+						"referenceName": "Parquet_ds",
+						"type": "DatasetReference"
+					},
+					"name": "MovieCountParquet"
+				}
+			],
+			"transformations": [
+				{
+					"name": "DerivingYear"
+				},
+				{
+					"name": "selectRequiredColumns"
+				},
+				{
+					"name": "movieCountAggregation"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          movieId as short,",
+				"          title as string,",
+				"          genres as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> source1",
+				"source1 derive(Year = toInteger(trim(right(title,6),'()')),",
+				"          MovieTtitle = toString(left(title, length(title) -6))) ~> DerivingYear",
+				"DerivingYear select(mapColumn(",
+				"          movieId,",
+				"          Year,",
+				"          MovieTtitle,",
+				"          genres",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> selectRequiredColumns",
+				"selectRequiredColumns aggregate(groupBy(Year),",
+				"     MovieCount = count()) ~> movieCountAggregation",
+				"selectRequiredColumns sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     format: 'parquet',",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> DerivedParquetData",
+				"movieCountAggregation sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     format: 'parquet',",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> MovieCountParquet"
+			]
+		}
+	}
+}

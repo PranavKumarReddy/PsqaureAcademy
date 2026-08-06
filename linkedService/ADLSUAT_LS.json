@@ -1,0 +1,12 @@
+{
+	"name": "ADLSUAT_LS",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "AzureBlobFS",
+		"typeProperties": {
+			"url": "https://psquareadlsuat.dfs.core.windows.net/",
+			"encryptedCredential": "ew0KICAiVmVyc2lvbiI6ICIyMDE3LTExLTMwIiwNCiAgIlByb3RlY3Rpb25Nb2RlIjogIktleSIsDQogICJTZWNyZXRDb250ZW50VHlwZSI6ICJQbGFpbnRleHQiLA0KICAiQ3JlZGVudGlhbElkIjogIkRBVEFGQUNUT1JZQDlFRjUxNTM1LUVDNTMtNDBFNy05MTEzLThBRTY4RUIzQTZCRl9mMmQ2NGE2YS1iZGJmLTQ5NzctOTAyMy03M2E2OGEwNDI1OWYiDQp9"
+		}
+	}
+}
